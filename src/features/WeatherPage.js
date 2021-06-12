@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Search from "../components/Search";
 import WeatherCard from "../components/WeatherCard";
+import Forecast from "../components/Forecast";
 
 
 const WeatherPage = ({ weatherData, onClickSearch, searchInputValue, setSearchInputValue }) => {
@@ -20,17 +21,13 @@ const WeatherPage = ({ weatherData, onClickSearch, searchInputValue, setSearchIn
           onClickSearch={onClickSearch}
         />
       </header>
-      <div>
+      <div className={classes.weatherContainer}>
         <WeatherCard
-          location={weatherData.currentWeather.name}
-          temperture={weatherData.currentWeather.main.temp}
-          feelsLike={weatherData.currentWeather.main.feels_like}
-          weather={weatherData.currentWeather.weather[0].description}
-          sunrise={new Date (weatherData.currentWeather.sys.sunrise).toLocaleTimeString("en-US")}
-          sunset={new Date (weatherData.currentWeather.sys.sunset).toLocaleTimeString("en-US")}
+          currentWeather={weatherData.currentWeather}
         />
-        <div>
-      </div>
+        <Forecast 
+          forecast={weatherData.forecast.daily.slice(1)} 
+        />
       </div>
     </div>
   );
@@ -38,6 +35,19 @@ const WeatherPage = ({ weatherData, onClickSearch, searchInputValue, setSearchIn
 
 
 const useStyles = makeStyles({
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+    boxSizing: "border-box",
+  },
+  weatherContainer: {
+    display: "flex",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column"
+  },
   weatherTodayContainer: {
     display: "flex",
     justifyContent: "center",
@@ -46,9 +56,6 @@ const useStyles = makeStyles({
   weatherIcon: {
     height: "300px",
     width: "300px"
-  },
-  container: {
-
   },
   h2: {
     color: "white",

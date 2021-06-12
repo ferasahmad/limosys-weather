@@ -1,10 +1,10 @@
 import axios from "axios";
 
 export const getCurrentWeather = (location) => {
-  return axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=6bcaf83a8d0df87b51db369041aaccec&units=imperial`);
+  return axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${process.env.REACT_APP_OPENWEATHER_APP_ID}&units=imperial`);
 }
 
-export const getFutureWeather = (location) => {
-  return axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${location}&cnt=1&appid=6bcaf83a8d0df87b51db369041aaccec&units=imperial`);
+export const getForecast = (lat, lon) => {
+  return axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,current,hourly,alerts&appid=${process.env.REACT_APP_OPENWEATHER_APP_ID}&cnt=5&units=imperial`);
 }
 
