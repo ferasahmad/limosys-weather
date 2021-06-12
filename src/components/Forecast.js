@@ -8,15 +8,11 @@ import { returnWeatherIcon } from "../utilities/returnWeatherIcon";
 const Forecast = ({ forecast }) => {
   const classes = useStyles();
 
-  console.log("forecast");
-  console.log(forecast.shift());
-
-
   return (
     <div className={classes.container}>
       {
         forecast.map((forecast) => (
-          <div className={classes.day}>
+          <div className={classes.day} key={forecast.dt}>
             <img 
               className={classes.weatherIcon} 
               src={returnWeatherIcon(forecast.weather[0].id)} 
