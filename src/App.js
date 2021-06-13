@@ -1,29 +1,49 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 
-import { getCurrentWeather, getForecast } from "./api";
+import { getWeatherByName, getForecast, getWeatherByCoordinates } from "./api";
 import SearchPage from "./features/SearchPage";
 import WeatherPage from "./features/WeatherPage";
+import useGeoLocation from "./hooks/useGeoLocation";
 
 
 const App = () => {
   const [weatherData, setWeatherData] = useState();
   const [searchInputValue, setSearchInputValue] = useState("");
+  const location = useGeoLocation();
+
+  useEffect(() => {
+    if(location.loaded) {
+      if(location.coordinates) {
+        handleWeatherRequestByCoords(location.coordinates.lat, location.coordinates.lon);
+      }
+    }
+  },[location])
 
   const onClickSearch = () => {
-    handleWeatherResponse();
+    handleWeatherResponseByName();
     setSearchInputValue("");
   }
 
-  const handleWeatherResponse = async () => {
+  const handleWeatherRequestByCoords = async (lat, lon) => {
     try {
-      const currentWeatherResponse = await getCurrentWeather(searchInputValue);
-      const futureWeatherResponse = await getForecast(currentWeatherResponse.data.coord.lat, currentWeatherResponse.data.coord.lon);
-      setWeatherData({ currentWeather: currentWeatherResponse.data, forecast: futureWeatherResponse.data });
+      const weatherResponse = await getWeatherByCoordinates(lat, lon);
+      const forecastResponse = await getForecast(lat, lon);
+      setWeatherData({ currentWeather: weatherResponse.data, forecast: forecastResponse.data.daily });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleWeatherResponseByName = async () => {
+    try {
+      const weatherResponse = await getWeatherByName(searchInputValue);
+      const forecastResponse = await getForecast(weatherResponse.data.coord.lat, weatherResponse.data.coord.lon);
+      setWeatherData({ currentWeather: weatherResponse.data, forecast: forecastResponse.data.daily });
     } catch (error) {
       console.log(error);
       alert("Could not find location.")
     }
-  }
+  };
 
   return (
     <Fragment>

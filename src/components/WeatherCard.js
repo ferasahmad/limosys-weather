@@ -52,7 +52,7 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "space-around",
     color: "white",
-    width: "80%",
+    width: "90%",
   },
   leftContainer: {
     display: "flex",
