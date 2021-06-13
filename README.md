@@ -1,4 +1,4 @@
-## LimoSys Frontend Technical Assessment 🚀
+## LimoSys React Weather Project 🚀
 
 You will need `node v13.7.0`, `yarn`, and `react` installed globally on your machine.
 
