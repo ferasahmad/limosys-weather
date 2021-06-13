@@ -5,8 +5,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Item from "../components/Item";
 import Pin from "../assets/images/pin.png";
 import TempertureIcon from "../assets/images/temp.png";
-import SunriseIcon from "../assets/images/sunrise.png";
-import SunsetIcon from "../assets/images/sunset.png";
 import WindIcon from "../assets/images/wind.png";
 import HumidityIcon from "../assets/images/humidity.png";
 import CloudIcon from "../assets/images/clouds.png";
@@ -36,11 +34,9 @@ const WeatherCard = ({ currentWeather }) => {
         <p className={classes.weather}>{currentWeather.weather[0].main}</p>
       </div>
       <div className={classes.rightContainer}>
-        <Item icon={SunriseIcon} text={new Date (currentWeather.sys.sunrise).toLocaleTimeString("en-US")} />
-        <Item icon={SunsetIcon} text={new Date (currentWeather.sys.sunset).toLocaleTimeString("en-US")} />
-        <Item icon={WindIcon} text={`${currentWeather.wind.speed} miles/hour`} />
-        <Item icon={HumidityIcon} text={`${currentWeather.main.humidity}%`} />
-        <Item icon={CloudIcon} text={`${currentWeather.clouds.all}%`} />
+        <Item icon={WindIcon} text={`wind: ${currentWeather.wind.speed} miles/hour`} />
+        <Item icon={HumidityIcon} text={`humidity: ${currentWeather.main.humidity}%`} />
+        <Item icon={CloudIcon} text={`clouds: ${currentWeather.clouds.all}%`} />
       </div>
     </div>
   );
@@ -107,7 +103,7 @@ const useStyles = makeStyles({
   },
   rightContainer: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     flexDirection: "column",
   },
 });

@@ -3,6 +3,7 @@ import React, { useState, Fragment, useEffect } from "react";
 import { getWeatherByName, getForecast, getWeatherByCoordinates } from "./api";
 import SearchPage from "./features/SearchPage";
 import WeatherPage from "./features/WeatherPage";
+import LoadingPage from "./components/LoadingPage";
 import useGeoLocation from "./hooks/useGeoLocation";
 
 
@@ -10,12 +11,14 @@ const App = () => {
   const [weatherData, setWeatherData] = useState();
   const [searchInputValue, setSearchInputValue] = useState("");
   const location = useGeoLocation();
+  const [ loading, setLoading ] = useState(true);
 
   useEffect(() => {
     if(location.loaded) {
       if(location.coordinates) {
         handleWeatherRequestByCoords(location.coordinates.lat, location.coordinates.lon);
       }
+      setLoading(false)
     }
   },[location])
 
@@ -45,22 +48,34 @@ const App = () => {
     }
   };
 
+  const renderContent = () => {
+    if(loading){
+      return <LoadingPage />
+    } else {
+      if(weatherData) {
+        return (
+          <WeatherPage
+            weatherData={weatherData}
+            onClickSearch={onClickSearch}
+            searchInputValue={searchInputValue}
+            setSearchInputValue={(value) => setSearchInputValue(value)}
+          />
+        )
+      } else {
+        return (
+          <SearchPage 
+            onClickSearch={onClickSearch}
+            searchInputValue={searchInputValue}
+            setSearchInputValue={(value) => setSearchInputValue(value)}
+          />
+        )
+      }
+    }
+  }
+
   return (
     <Fragment>
-      {
-        weatherData ? 
-        <WeatherPage
-          weatherData={weatherData}
-          onClickSearch={onClickSearch}
-          searchInputValue={searchInputValue}
-          setSearchInputValue={(value) => setSearchInputValue(value)}
-         /> :
-        <SearchPage 
-          onClickSearch={onClickSearch}
-          searchInputValue={searchInputValue}
-          setSearchInputValue={(value) => setSearchInputValue(value)}
-        />
-      }
+      {renderContent()}
     </Fragment>
   );
 }
