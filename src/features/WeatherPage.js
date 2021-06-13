@@ -10,6 +10,10 @@ import Forecast from "../components/Forecast";
 const WeatherPage = ({ weatherData, onClickSearch, searchInputValue, setSearchInputValue }) => {
   const classes = useStyles();
 
+  console.log("weatherData.forecast");
+  console.log(weatherData.forecast);
+  console.log(weatherData.currentWeather);
+
   return (
     <div className={classes.container}>
       <header className={classes.header}>
@@ -25,7 +29,7 @@ const WeatherPage = ({ weatherData, onClickSearch, searchInputValue, setSearchIn
           currentWeather={weatherData.currentWeather}
         />
         <Forecast 
-          forecast={weatherData.forecast.slice(1)} 
+          forecast={weatherData.forecast.slice(1, -2)} 
         />
       </div>
     </div>
