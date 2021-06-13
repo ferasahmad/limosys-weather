@@ -1,4 +1,4 @@
-## Bennie Frontend Technical Assessment 🚀
+## LimoSys Frontend Technical Assessment 🚀
 
 You will need `node v13.7.0`, `yarn`, and `react` installed globally on your machine.
 
